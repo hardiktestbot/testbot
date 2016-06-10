@@ -27,6 +27,7 @@ app.get('/webhook/', function (req, res) {
     res.send('Error, wrong token')
 })
 
+var reply="default";
 
 var aimlInterpreter = new AIMLInterpreter({name:'WireInterpreter', age:'42'});
 aimlInterpreter.loadAIMLFilesIntoArray(['AIML/turing.aiml.xml','AIML/test.aiml.xml']);
@@ -34,6 +35,7 @@ aimlInterpreter.loadAIMLFilesIntoArray(['AIML/turing.aiml.xml','AIML/test.aiml.x
 var callback = function(answer, wildCardArray, input){
     console.log(answer + ' | ' + wildCardArray + ' | ' + input);
     //sendTextMessage(sender,answer);
+    reply = answer;
 };
 
 app.post('/webhook/', function (req, res) {
@@ -45,6 +47,7 @@ app.post('/webhook/', function (req, res) {
             let text = event.message.text
             sendTextMessage(sender, "thinking...");
             aimlInterpreter.findAnswerInLoadedAIMLFiles('who are you?', callback);
+            sendTextMessage(sender, reply);
         }
     }
     res.sendStatus(200)

@@ -30,6 +30,10 @@ app.get('/webhook/', function (req, res) {
 var aimlInterpreter = new AIMLInterpreter({name:'WireInterpreter', age:'42'});
 aimlInterpreter.loadAIMLFilesIntoArray(['AIML/turing.aiml.xml','AIML/test.aiml.xml']);
 
+var callback = function(answer, wildCardArray, input){
+    console.log(answer + ' | ' + wildCardArray + ' | ' + input);
+};
+
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {

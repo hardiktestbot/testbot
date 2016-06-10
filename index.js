@@ -4,7 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
-//const AIMLInterpreter - require('aimlinterpreter/AIMLInterpreter');
+const AIMLInterpreter = require('aimlinterpreter/AIMLInterpreter');
 
 app.set('port', (process.env.PORT || 5000))
 
@@ -27,8 +27,8 @@ app.get('/webhook/', function (req, res) {
     res.send('Error, wrong token')
 })
 
-//var aimlInterpreter = new AIMLInterpreter({name:'WireInterpreter', age:'42'});
-//aimlInterpreter.loadAIMLFilesIntoArray(['AIML/turing.aiml.xml','AIML/test.aiml.xml']);
+var aimlInterpreter = new AIMLInterpreter({name:'WireInterpreter', age:'42'});
+aimlInterpreter.loadAIMLFilesIntoArray(['AIML/turing.aiml.xml','AIML/test.aiml.xml']);
 
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging

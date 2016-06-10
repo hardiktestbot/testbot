@@ -45,8 +45,8 @@ app.post('/webhook/', function (req, res) {
         let sender = event.sender.id 
         if (event.message && event.message.text) {
             let text = event.message.text
-            sendTextMessage(sender, "thinking...");
-            aimlInterpreter.findAnswerInLoadedAIMLFiles('who are you?', callback);
+            //sendTextMessage(sender, "thinking...");
+            aimlInterpreter.findAnswerInLoadedAIMLFiles(text, callback);
             sendTextMessage(sender, reply);
         }
     }

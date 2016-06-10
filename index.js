@@ -33,7 +33,7 @@ aimlInterpreter.loadAIMLFilesIntoArray(['AIML/turing.aiml.xml','AIML/test.aiml.x
 
 var callback = function(answer, wildCardArray, input){
     console.log(answer + ' | ' + wildCardArray + ' | ' + input);
-    sendTextMessage(sender,answer);
+    //sendTextMessage(sender,answer);
 };
 
 app.post('/webhook/', function (req, res) {

@@ -27,17 +27,23 @@ app.get('/webhook/', function (req, res) {
     res.send('Error, wrong token')
 })
 
+
 var aimlInterpreter = new AIMLInterpreter({name:'WireInterpreter', age:'42'});
 aimlInterpreter.loadAIMLFilesIntoArray(['AIML/turing.aiml.xml','AIML/test.aiml.xml']);
+
+var callback = function(answer, wildCardArray, input){
+    console.log(answer + ' | ' + wildCardArray + ' | ' + input);
+
+};
 
 app.post('/webhook/', function (req, res) {
     let messaging_events = req.body.entry[0].messaging
     for (let i = 0; i < messaging_events.length; i++) {
         let event = req.body.entry[0].messaging[i]
-        let sender = event.sender.id
+        let sender = event.sender.id 
         if (event.message && event.message.text) {
             let text = event.message.text
-            //sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
+            sendTextMessage(sender, "Text received, echo: " + text.substring(0, 200))
             aimlInterpreter.findAnswerInLoadedAIMLFiles('who are you?', callback);
         }
     }
@@ -47,10 +53,7 @@ app.post('/webhook/', function (req, res) {
 const token = "EAAYzy1IZARX0BABG8IGD70JWHxre16xrz030lgZCHh4jWcSG7AWSuBxN0ZCr31ObwMwfZA33A3fboWRZC11tAQeruVGZBRjykpRW0mz91pFS2ZAFrQxOavrtySbVdeMNFtMeR0XbKrKIWwLNGZCGCvfm02kX5BQEZA8vDJzs1RZAhIXlk8OhaaRHsR"
 
 
-var callback = function(answer, wildCardArray, input){
-    console.log(answer + ' | ' + wildCardArray + ' | ' + input);
-    sendTextMessage(sender,answer);
-};
+
 
 function sendTextMessage(sender, text) {
     let messageData = { text:text }
